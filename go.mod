@@ -28,3 +28,5 @@ require (
 )
 
 replace github.com/apache/thrift => github.com/apache/thrift v0.13.0
+
+replace github.com/cloudwego/kitex/pkg/protocol/bthrift/apache => github.com/cloudwego/kitex v0.11.3
