@@ -4,8 +4,8 @@ import (
 	"net"
 	"time"
 
-	"github.com/GreysonCarlos/gomall/conf"
-	"github.com/GreysonCarlos/gomall/demo/demo_thrift/kitex_gen/api/echo"
+	"github.com/GreysonCarlos/gomall/demo/demo_thrift/biz/kitex_gen/api/echo"
+	"github.com/GreysonCarlos/gomall/demo/demo_thrift/conf"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/pkg/transmeta"

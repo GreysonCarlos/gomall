@@ -4,7 +4,7 @@ package echo
 
 import (
 	"context"
-	api "github.com/GreysonCarlos/gomall/demo/demo_thrift/kitex_gen/api"
+	api "github.com/GreysonCarlos/gomall/demo/demo_thrift/biz/kitex_gen/api"
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
 )
