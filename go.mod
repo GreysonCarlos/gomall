@@ -1,4 +1,4 @@
-module Gomall
+module github.com/GreysonCarlos/gomall
 
 go 1.23.2
 
