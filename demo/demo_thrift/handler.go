@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	api "github.com/GreysonCarlos/gomall/demo/demo_thrift/biz/kitex_gen/api"
+	api "github.com/GreysonCarlos/gomall/demo/demo_thrift/kitex_gen/api"
 	"github.com/GreysonCarlos/gomall/demo/demo_thrift/biz/service"
 )
 

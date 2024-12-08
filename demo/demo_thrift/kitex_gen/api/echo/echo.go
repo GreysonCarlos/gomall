@@ -5,7 +5,7 @@ package echo
 import (
 	"context"
 	"errors"
-	api "github.com/GreysonCarlos/gomall/demo/demo_thrift/biz/kitex_gen/api"
+	api "github.com/GreysonCarlos/gomall/demo/demo_thrift/kitex_gen/api"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
 )
