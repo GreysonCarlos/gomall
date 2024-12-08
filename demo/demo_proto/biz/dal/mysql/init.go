@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/GreysonCarlos/demo/demo_proto/conf"
+	"github.com/GreysonCarlos/demo/demo_proto/model"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -32,6 +33,7 @@ func Init() {
 		panic(err)
 	}
 
+	DB.AutoMigrate(&model.User{})
 	type Version struct {
 		Version	string
 	}
