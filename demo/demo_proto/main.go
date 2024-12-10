@@ -8,6 +8,7 @@ import (
 	"github.com/GreysonCarlos/demo/demo_proto/biz/dal"
 	"github.com/GreysonCarlos/demo/demo_proto/conf"
 	"github.com/GreysonCarlos/demo/demo_proto/kitex_gen/pbapi/echoservice"
+	"github.com/GreysonCarlos/demo/demo_proto/middleware"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/server"
@@ -40,7 +41,7 @@ func kitexInit() (opts []server.Option) {
 	if err != nil {
 		panic(err)
 	}
-	opts = append(opts, server.WithServiceAddr(addr))
+	opts = append(opts, server.WithServiceAddr(addr), server.WithMiddleware(middleware.Middleware))
 
 	// service info
 	opts = append(opts, server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{
