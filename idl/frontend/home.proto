@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+import "api.proto";
+
+package frontend.home;
+
+option go_package = "frontend/home";
+
+message Empty {}
+
+service HomeService {
+   rpc Method1(Empty) returns(Empty) {
+      option (api.get) = "/";
+   }
+}
