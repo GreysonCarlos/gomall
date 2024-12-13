@@ -21,12 +21,11 @@ func Method1(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := &home.Empty{}
-	resp, err = service.NewMethod1Service(ctx, c).Run(&req)
+	resp, err := service.NewMethod1Service(ctx, c).Run(&req)
 	if err != nil {
 		utils.SendErrResponse(ctx, c, consts.StatusOK, err)
 		return
 	}
-
-	utils.SendSuccessResponse(ctx, c, consts.StatusOK, resp)
+	// 加载特定模板
+	c.HTML(consts.StatusOK, "home.tmpl", resp)
 }
