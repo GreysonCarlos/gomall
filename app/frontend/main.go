@@ -37,7 +37,8 @@ func main() {
 	})
 
 	router.GeneratedRegister(h)
-
+	h.LoadHTMLGlob("template/*")
+	h.Static("/static", "./")	// 加载静态资源
 	h.Spin()
 }
 
