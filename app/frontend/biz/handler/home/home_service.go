@@ -27,5 +27,5 @@ func Method1(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	// 加载特定模板
-	c.HTML(consts.StatusOK, "home.tmpl", resp)
+	c.HTML(consts.StatusOK, "home", resp)
 }
