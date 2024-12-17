@@ -5,7 +5,7 @@ import (
 
 	"github.com/GreysonCarlos/projects/Gomall/app/frontend/biz/service"
 	"github.com/GreysonCarlos/projects/Gomall/app/frontend/biz/utils"
-	home "github.com/GreysonCarlos/projects/Gomall/app/frontend/hertz_gen/frontend/home"
+	common "github.com/GreysonCarlos/projects/Gomall/app/frontend/hertz_gen/frontend/common"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
@@ -14,7 +14,7 @@ import (
 // @router / [GET]
 func Method1(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req home.Empty
+	var req common.Empty
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		utils.SendErrResponse(ctx, c, consts.StatusOK, err)
@@ -27,5 +27,5 @@ func Method1(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	// 加载特定模板
-	c.HTML(consts.StatusOK, "home", resp)
+	c.HTML(consts.StatusOK, "home", utils.WarpResponse(ctx, c, resp))
 }

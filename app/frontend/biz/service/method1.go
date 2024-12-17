@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 
-	home "github.com/GreysonCarlos/projects/Gomall/app/frontend/hertz_gen/frontend/home"
+	common "github.com/GreysonCarlos/projects/Gomall/app/frontend/hertz_gen/frontend/common"
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
@@ -16,7 +16,7 @@ func NewMethod1Service(Context context.Context, RequestContext *app.RequestConte
 	return &Method1Service{RequestContext: RequestContext, Context: Context}
 }
 
-func (h *Method1Service) Run(req *home.Empty) (map[string]any, error) {
+func (h *Method1Service) Run(req *common.Empty) (map[string]any, error) {
 	//defer func() {
 	// hlog.CtxInfof(h.Context, "req = %+v", req)
 	// hlog.CtxInfof(h.Context, "resp = %+v", resp)
