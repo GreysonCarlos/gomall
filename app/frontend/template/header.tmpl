@@ -53,7 +53,12 @@
               <span>Hello</span>
           </div>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Log Out</a></li>
+            <li><a class="dropdown-item" href="#">Order Center</a></li>
+            <li>
+              <form action="/auth/logout", method="post">
+                <button class="dropdown-item" type="submit">Log Out</button>
+              </form>
+            </li>
           </ul>
         </div>
         {{ else }}
