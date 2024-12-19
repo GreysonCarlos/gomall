@@ -1,0 +1,4 @@
+github.com/GreysonCarlos/gomall v0.0.0-20241205080756-613e7becc2af h1:asxTHJdk3wQFBE3e6gbmolCIBv+Zcm43pLZAXBIuA1I=
+github.com/GreysonCarlos/gomall v0.0.0-20241205080756-613e7becc2af/go.mod h1:qi2yNxWYt/04tvjKqGO2Tssfq+6MojP3oknd/85vc1E=
+github.com/golang/protobuf v1.5.4 h1:i7eJL8qZTpSEXOPTxNKhASYpMn+8e5Q6AdndVa1dWek=
+github.com/golang/protobuf v1.5.4/go.mod h1:lnTiLA8Wa4RWRcIUkrtSVa5nRhsEGBg48fD6rSs7xps=
