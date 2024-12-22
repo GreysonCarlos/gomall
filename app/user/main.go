@@ -1,25 +1,34 @@
 package main
 
 import (
+	"log"
 	"net"
 	"time"
 
+	"github.com/GreysonCarlos/gomall/app/user/biz/dal"
+	"github.com/GreysonCarlos/gomall/app/user/conf"
+	"github.com/GreysonCarlos/gomall/rpc_gen/kitex_gen/user/userservice"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/server"
+	"github.com/joho/godotenv"
 	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
-	"github.com/GreysonCarlos/gomall/app/user/conf"
-	"github.com/GreysonCarlos/gomall/rpc_gen/kitex_gen/user/userservice"
+	consul "github.com/kitex-contrib/registry-consul"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		panic(err)
+	}
+	dal.Init()
 	opts := kitexInit()
 
 	svr := userservice.NewServer(new(UserServiceImpl), opts...)
 
-	err := svr.Run()
+	err = svr.Run()
 	if err != nil {
 		klog.Error(err.Error())
 	}
@@ -38,6 +47,12 @@ func kitexInit() (opts []server.Option) {
 		ServiceName: conf.GetConf().Kitex.Service,
 	}))
 
+	r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0])
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	opts = append(opts, server.WithRegistry(r))
 	// klog
 	logger := kitexlogrus.NewLogger()
 	klog.SetLogger(logger)
