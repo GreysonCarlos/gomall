@@ -9,6 +9,7 @@ import (
 
 	"github.com/GreysonCarlos/projects/Gomall/app/frontend/biz/router"
 	"github.com/GreysonCarlos/projects/Gomall/app/frontend/conf"
+	"github.com/GreysonCarlos/projects/Gomall/app/frontend/infra/rpc"
 	"github.com/GreysonCarlos/projects/Gomall/app/frontend/middleware"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery"
@@ -31,6 +32,7 @@ import (
 func main() {
 	// init dal
 	// dal.Init()
+	rpc.Init()
 	_ = godotenv.Load()
 	address := conf.GetConf().Hertz.Address
 	h := server.New(server.WithHostPorts(address))
@@ -46,7 +48,7 @@ func main() {
 	h.LoadHTMLGlob("template/*")
 	h.Static("/static", "./")	// 加载静态资源
 
-	h.GET("/about", middleware.Auth(), func(c context.Context, ctx *app.RequestContext) {
+	h.GET("/about", func(c context.Context, ctx *app.RequestContext) {
 		ctx.HTML(consts.StatusOK, "about", utils.H{"Title": "About"})
 	})
 
