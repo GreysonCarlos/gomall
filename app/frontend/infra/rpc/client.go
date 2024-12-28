@@ -1,10 +1,10 @@
 package rpc
 
 import (
-	"log"
 	"sync"
 
 	"github.com/GreysonCarlos/gomall/rpc_gen/kitex_gen/user/userservice"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/kitex/client"
 	consul "github.com/kitex-contrib/registry-consul"
 )
@@ -25,11 +25,11 @@ func Init() {
 func initUserClient() {
 	r, err := consul.NewConsulResolver("127.0.0.1:8500")
 	if err != nil {
-		log.Fatal(err)
+		hlog.Fatal(err)
 	}
 
 	UserClient, err = userservice.NewClient("user", client.WithResolver(r))
 	if err != nil {
-		log.Fatal(err)
+		hlog.Fatal(err)
 	}
 }
