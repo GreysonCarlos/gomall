@@ -37,7 +37,7 @@ func (s *RegisterService) Run(req *user.RegisterReq) (resp *user.RegisterResp, e
 		Email: req.Email,
 		PasswordHash: string(passwordHashed),
 	}
-	err = model.Create(*mysql.DB, newUser)
+	err = model.Create(mysql.DB, newUser)
 	if err != nil {
 		return nil, err
 	}
