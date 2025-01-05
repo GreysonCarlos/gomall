@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package product;
+
+option go_package = "/product";
+
+service ProductCatalogServie {
+    rpc ListProducts (ListProductReq) returns (ListProductsResp) {};
+    rpc GetProduct (GetProductReq) returns (GetProductResp) {};
+    rpc SearchProducts (SearchProductsReq) returns (SearchProductsResp) {};
+}
+
+message ListProductReq {
+    int32 page = 1;
+    int32 page_size = 2; // 每页返回多少商品
+    string catagory_name = 3; // 根据分类名称获取商品列表
+}
+
+message Product {
+    uint32 id = 1;
+    string name = 2;
+    string description = 3;
+    string picture = 4;
+    float price = 5;
+
+    repeated string catagories = 6;
+}
+
+// 商品列表
+message ListProductsResp {
+    repeated Product products = 1;
+}
+
+// 商品详情接口,请求参数为商品ID
+message GetProductReq {
+    uint32 id = 1;
+}
+
+// 商品详情接口,响应参数为商品
+message GetProductResp {
+    Product product = 1;
+}
+
+// 查询商品接口,请求参数为query
+message SearchProductsReq {
+    string query = 1;
+}
+
+// 响应参数为列表
+message SearchProductsResp {
+    repeated Product results = 1;
+}
