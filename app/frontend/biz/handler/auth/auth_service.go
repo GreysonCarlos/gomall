@@ -3,10 +3,10 @@ package auth
 import (
 	"context"
 
-	"github.com/GreysonCarlos/projects/Gomall/app/frontend/biz/service"
-	"github.com/GreysonCarlos/projects/Gomall/app/frontend/biz/utils"
-	auth "github.com/GreysonCarlos/projects/Gomall/app/frontend/hertz_gen/frontend/auth"
-	common "github.com/GreysonCarlos/projects/Gomall/app/frontend/hertz_gen/frontend/common"
+	"github.com/GreysonCarlos/gomall/app/frontend/biz/service"
+	"github.com/GreysonCarlos/gomall/app/frontend/biz/utils"
+	auth "github.com/GreysonCarlos/gomall/app/frontend/hertz_gen/frontend/auth"
+	common "github.com/GreysonCarlos/gomall/app/frontend/hertz_gen/frontend/common"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )

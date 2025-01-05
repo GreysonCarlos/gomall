@@ -3,9 +3,9 @@ package service
 import (
 	"context"
 
+	auth "github.com/GreysonCarlos/gomall/app/frontend/hertz_gen/frontend/auth"
+	"github.com/GreysonCarlos/gomall/app/frontend/infra/rpc"
 	"github.com/GreysonCarlos/gomall/rpc_gen/kitex_gen/user"
-	auth "github.com/GreysonCarlos/projects/Gomall/app/frontend/hertz_gen/frontend/auth"
-	"github.com/GreysonCarlos/projects/Gomall/app/frontend/infra/rpc"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/hertz-contrib/sessions"
 )

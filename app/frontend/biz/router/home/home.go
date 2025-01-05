@@ -3,7 +3,7 @@
 package home
 
 import (
-	home "github.com/GreysonCarlos/projects/Gomall/app/frontend/biz/handler/home"
+	home "github.com/GreysonCarlos/gomall/app/frontend/biz/handler/home"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 

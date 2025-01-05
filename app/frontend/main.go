@@ -4,13 +4,13 @@ package main
 
 import (
 	"context"
-	"os"
 	"time"
+	"os"
 
-	"github.com/GreysonCarlos/projects/Gomall/app/frontend/biz/router"
-	"github.com/GreysonCarlos/projects/Gomall/app/frontend/conf"
-	"github.com/GreysonCarlos/projects/Gomall/app/frontend/infra/rpc"
-	"github.com/GreysonCarlos/projects/Gomall/app/frontend/middleware"
+	"github.com/GreysonCarlos/gomall/app/frontend/biz/router"
+	"github.com/GreysonCarlos/gomall/app/frontend/conf"
+	"github.com/GreysonCarlos/gomall/app/frontend/infra/rpc"
+	"github.com/GreysonCarlos/gomall/app/frontend/middleware"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery"
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -21,12 +21,12 @@ import (
 	"github.com/hertz-contrib/gzip"
 	"github.com/hertz-contrib/logger/accesslog"
 	hertzlogrus "github.com/hertz-contrib/logger/logrus"
-	"github.com/hertz-contrib/pprof"
 	"github.com/hertz-contrib/sessions"
 	"github.com/hertz-contrib/sessions/redis"
-	"github.com/joho/godotenv"
+	"github.com/hertz-contrib/pprof"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
+	"github.com/joho/godotenv"
 )
 
 func main() {
