@@ -6,11 +6,12 @@ import (
 	"github.com/GreysonCarlos/gomall/app/checkout/infrac/rpc"
 	"github.com/GreysonCarlos/gomall/rpc_gen/kitex_gen/cart"
 	checkout "github.com/GreysonCarlos/gomall/rpc_gen/kitex_gen/checkout"
+	"github.com/GreysonCarlos/gomall/rpc_gen/kitex_gen/order"
 	"github.com/GreysonCarlos/gomall/rpc_gen/kitex_gen/payment"
 	"github.com/GreysonCarlos/gomall/rpc_gen/kitex_gen/product"
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	"github.com/cloudwego/kitex/pkg/klog"
-	"github.com/google/uuid"
+	// "github.com/google/uuid"
 )
 
 type CheckoutService struct {
@@ -35,6 +36,7 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 	}
 
 	var total float32
+	var oi []*order.OrderItem
 	for _, cartItem := range cartResult.Items {
 		// 真实开发环境中避免在for循环内使用rpc调用，会影响性能
 		productResp, resultErr := rpc.ProductClient.GetProduct(s.ctx, &product.GetProductReq{
@@ -52,12 +54,40 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 		p := productResp.Product.Price
 		cost := p * float32(cartItem.Quantity)
 		total += cost
+		oi = append(oi, &order.OrderItem{
+			Item: &cart.CartItem{
+				ProductId: cartItem.ProductId,
+				Quantity: cartItem.Quantity,
+			},
+			Cost: cost,
+		})
+	}
+	var orderId string
+	// 虚拟订单，模拟订单创建
+	// u, _ := uuid.NewRandom()
+	// orderId := u.String()
+
+	// 更改:与orderservice进行交互，通过rpc调用获取orderId
+	orderResp, err := rpc.OrderClient.PlaceOrder(s.ctx, &order.PlaceOrderReq{
+		UserId: req.UserId,
+		UserCurrency: "USA",
+		Email: req.Email,
+		Address: &order.Address{
+			StreetAddress: req.Address.StreetAddress,
+			City: req.Address.City,
+			State: req.Address.State,
+			Country: req.Address.Country,
+			ZipCode: req.Address.ZipCode,
+		},
+		Items: oi,
+	})
+	if err != nil {
+		return nil, kerrors.NewGRPCBizStatusError(5004002, err.Error())
 	}
 
-	// 虚拟订单，模拟订单创建
-	u, _ := uuid.NewRandom()
-	orderId := u.String()
-
+	if orderResp != nil && orderResp.Result != nil {
+		orderId = orderResp.Result.OrderId
+	}
 	payReq := &payment.ChargeReq{
 		UserId: req.UserId,
 		OrderId: orderId,
