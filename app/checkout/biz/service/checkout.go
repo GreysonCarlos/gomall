@@ -3,14 +3,18 @@ package service
 import (
 	"context"
 
+	"github.com/GreysonCarlos/gomall/app/checkout/infrac/mq"
 	"github.com/GreysonCarlos/gomall/app/checkout/infrac/rpc"
 	"github.com/GreysonCarlos/gomall/rpc_gen/kitex_gen/cart"
 	checkout "github.com/GreysonCarlos/gomall/rpc_gen/kitex_gen/checkout"
+	"github.com/GreysonCarlos/gomall/rpc_gen/kitex_gen/email"
 	"github.com/GreysonCarlos/gomall/rpc_gen/kitex_gen/order"
 	"github.com/GreysonCarlos/gomall/rpc_gen/kitex_gen/payment"
 	"github.com/GreysonCarlos/gomall/rpc_gen/kitex_gen/product"
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	"github.com/cloudwego/kitex/pkg/klog"
+	"github.com/nats-io/nats.go"
+	"google.golang.org/protobuf/proto"
 	// "github.com/google/uuid"
 )
 
@@ -84,7 +88,7 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 	if err != nil {
 		return nil, kerrors.NewGRPCBizStatusError(5004002, err.Error())
 	}
-
+	
 	if orderResp != nil && orderResp.Result != nil {
 		orderId = orderResp.Result.OrderId
 	}
@@ -100,17 +104,24 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 		},
 	}
 
-	_, err = rpc.CartClient.EmptyCart(s.ctx, &cart.EmptyCartReq{UserId: req.UserId})
-	
-	if err != nil {
-		klog.Error(err.Error())
-	}
-
 	paymentResult, err := rpc.PaymentClient.Charge(s.ctx, payReq)
 
 	if err != nil {
 		return nil, err
 	}
+
+	data, _ := proto.Marshal(&email.EmailReq{
+		From: "from@example.com",
+		To: req.Email,
+		ContentType: "text/plain",
+		Subject: "You have just created an order in the Phony Shop",
+		Content: "You have just created an order in the Phony Shop",
+	})
+	_, err = rpc.CartClient.EmptyCart(s.ctx, &cart.EmptyCartReq{UserId: req.UserId})
+	
+	msg := &nats.Msg{Subject: "email", Data: data}
+
+	_ = mq.Nc.PublishMsg(msg)
 
 	klog.Info(paymentResult)
 

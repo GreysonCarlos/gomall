@@ -27,15 +27,30 @@ import (
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"github.com/joho/godotenv"
+	"github.com/GreysonCarlos/gomall/common/mtl"
+	prometheus "github.com/hertz-contrib/monitor-prometheus"
+	frontendUtils "github.com/GreysonCarlos/gomall/app/frontend/utils"
+)
+
+var (
+	ServiceName = frontendUtils.ServiceName
+	MetricsPort = conf.GetConf().Hertz.MetricsPort
+	RegistryAddr = conf.GetConf().Hertz.RegistryAddr
 )
 
 func main() {
 	// init dal
 	// dal.Init()
+	consul, registryInfo := mtl.InitMetric(ServiceName, MetricsPort, RegistryAddr)
+	defer consul.Register(registryInfo)	// 在hertz结束后会反注册掉Prometheus上的实例
 	rpc.Init()
 	_ = godotenv.Load()
 	address := conf.GetConf().Hertz.Address
-	h := server.New(server.WithHostPorts(address))
+	h := server.New(server.WithHostPorts(address), 
+	server.WithTracer(prometheus.NewServerTracer("", "", prometheus.WithDisableServer(true),
+		prometheus.WithRegistry(mtl.Registry),
+	)),
+)
 
 	registerMiddleware(h)
 
